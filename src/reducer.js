@@ -2,10 +2,12 @@
 
 let state;
 
-function reducer(state= { count: 0 }, action) {
+function reducer(state = { count: 0 }, action) {
   switch (action.type) {
     case "counter/increment":
       return { count: state.count + 1 };
+    case "counter/decrement":
+      return { count: state.count - 1 };
     default:
       return state;
   }
@@ -20,10 +22,17 @@ function render() {
   let container = document.getElementById("container");
   container.textContent = state.count;
 }
-dispatch({type: '@@INIT'})
+dispatch({ type: "@@INIT" });
 
 let button = document.getElementById("button");
+let buttonMinus = document.getElementById("buttonminus");
 
 button.addEventListener("click", () => {
   dispatch({ type: "counter/increment" });
-})
+});
+
+buttonMinus.addEventListener("click", () => {
+  state.count > 0
+    ? dispatch({ type: "counter/decrement" })
+    : alert("Count is already 0");
+});
